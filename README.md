@@ -25,8 +25,8 @@ log.console.newLine();
 log.info("app ends");
 ```
 # 支持特性（部分特性基于simple-node-logger的已有功能）：
-## 1.支持日志分级管理(level，如trace, error, warn, debug, info等等)。simple-node-logger原有特性。
-## 2.一条log语句同时输出到console和file（console and file），而不需要写两条语句来达到目的，后者很容易漏掉日志输出语句。另外，jsloggers也支持单方向输出（console or file）。
+#### 1.支持日志分级管理(level，如trace, error, warn, debug, info等等)。simple-node-logger原有特性。
+#### 2.一条log语句同时输出到console和file（console and file），而不需要写两条语句来达到目的，后者很容易漏掉日志输出语句。另外，jsloggers也支持单方向输出（console or file）。
 ## 3.能分别定义输出到console和file的信息格式（如时间戳格式等），以满足console和file对日志的不同格式要求（如console日志有屏幕宽度限制，文件日志不带颜色属性等）。simple-node-logger原有特性。
 ## 4.能向console输出带颜色和格式控制等特殊escape字符串的内容，而同一份内容输出到file时要能过滤掉这些escape字符串，不至于打乱file日志。<br/>
 ## 5.能够指定日志文件名称，能支持按时间rolling文件名。simple-node-logger原有特性。
