@@ -1,0 +1,24 @@
+{
+  "name": "jsloggers",
+  "version": "1.0.0",
+  "description": "A javascript logging library",
+  "main": "jsloggers.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brucecan/jsloggers.git"
+  },
+  "keywords": [
+    "logging",
+    "logger",
+    "log"
+  ],
+  "author": "brucecan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/brucecan/jsloggers/issues"
+  },
+  "homepage": "https://github.com/brucecan/jsloggers#readme"
+}
