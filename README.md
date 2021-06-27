@@ -1,7 +1,7 @@
 # jsloggers
 A javascript logging library
 
-输出示意：
+输出示例：
 
 ![image](https://user-images.githubusercontent.com/76823086/123559147-37f05500-d768-11eb-9621-d48817567737.png)
 
