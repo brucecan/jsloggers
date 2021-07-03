@@ -7,8 +7,12 @@ A javascript logging library
 
 # 用法示例：
 ```
+// if package is installed through "npm install jsloggers"
+// const { createLog, CONST: { FCRED, FCGREEN, FCYELLOW, FCBLUE, FCNORMAL, NEWLINE } } = require('jsloggers');
+
+// or downloading the jsloggers.js file only
 const { createLog, CONST: { FCRED, FCGREEN, FCYELLOW, FCBLUE, FCNORMAL, NEWLINE } } 
-    = require(`${__dirname}/logger.js`);
+    = require(`${__dirname}/jsloggers.js`);
 
 const log = createLog({
     writer: process.stdout.write.bind(process.stdout),
