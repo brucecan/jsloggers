@@ -1,11 +1,11 @@
 # jsloggers
 A javascript logging library
 
-# 输出示例：
+# Output
 
 ![image](https://user-images.githubusercontent.com/76823086/123559147-37f05500-d768-11eb-9621-d48817567737.png)
 
-# 用法示例：
+# Usage
 ```
 // if package is installed through "npm install jsloggers"
 // const { createLog, CONST: { FCRED, FCGREEN, FCYELLOW, FCBLUE, FCNORMAL, NEWLINE } } = require('jsloggers');
