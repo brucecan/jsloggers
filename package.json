@@ -21,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/brucecan/jsloggers/issues"
   },
-  "homepage": "https://github.com/brucecan/jsloggers#readme"
+  "homepage": "https://github.com/brucecan/jsloggers#readme",
+  "dependencies": {
+    "simple-node-logger": "^18.12.24"
+  }
 }
