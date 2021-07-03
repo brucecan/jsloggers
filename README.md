@@ -22,12 +22,20 @@ const log = createLog({
     timestampFormat: "YYYY-MM-DD HH:mm:ss.SSS",
   });
 
-log.info("hello world"); // for both console and file
-log.fatal("some error happens"); // for both console and file
-log.fileln.warn("only for file"); // file only
-log.console.newLine(); // console only
-log.info("app ends"); // for both console and file
-log.console.resetLine().info(FCRED + "RED text " + FCNORMAL + FCYELLOW + "YELLOW text" + FCNORMAL); // console only
+log.error("1.this error log is for both console (+newline) and file (+newline)");
+log.debug("2.this debug log is for both console (+newline) and file (+newline)");
+log.console.fatal("3.this fatal log is for console only (no newline)");
+log.consoleln.warn("4.this warn log is for console only (+newline)");
+log.file.debug("5.this debug log is for file only (no newline)");
+log.file.warn("6.this warn log is for file only (no newline)");
+log.fileln.fatal("7.this fatal log is for file only (+newline)");
+log.fileln.trace("8.this trace log is for file only (+newline)");
+log.write.info("9.this info log is for both console (no newline) and file (no newline)");
+log.write.debug("10.this debug log is for both console (no newline) and file (no newline)");
+log.writeln.warn("11.this warn log is for both console (+newline) and file (+newline)");
+
+// output color logs to console only
+log.console.resetLine().info(FCRED + "RED text " + FCNORMAL + FCYELLOW + "YELLOW text" + FCNORMAL);
 
 // for both console and file,
 // in this case, the FONT COLOR escape characters only poses an effect on console, 
