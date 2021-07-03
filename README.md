@@ -61,6 +61,7 @@ log.info(FCRED + "RED text " + FCNORMAL + FCYELLOW + "YELLOW text" + FCNORMAL);
 <br/>
 Notes:
 You might see nothing (no console output) when debugging jsloggers in an IDE environment like Visual Studio Code. The following configuration (in launch.json) works like a charm in VSCode:
+
 ```
 "console": "integratedTerminal"
 ```
