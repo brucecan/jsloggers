@@ -22,11 +22,17 @@ const log = createLog({
     timestampFormat: "YYYY-MM-DD HH:mm:ss.SSS",
   });
 
-log.info("hello world");
-log.fatal("some error happens");
-log.fileln.warn("only for file");
-log.console.newLine();
-log.info("app ends");
+log.info("hello world"); // for both console and file
+log.fatal("some error happens"); // for both console and file
+log.fileln.warn("only for file"); // file only
+log.console.newLine(); // console only
+log.info("app ends"); // for both console and file
+log.console.resetLine().info(FCRED + "RED text " + FCNORMAL + FCYELLOW + "YELLOW text" + FCNORMAL); // console only
+
+// for both console and file,
+// in this case, the FONT COLOR escape characters only poses an effect on console, 
+// and those escape characters will be removed automatically before being writing to file
+log.info(FCRED + "RED text " + FCNORMAL + FCYELLOW + "YELLOW text" + FCNORMAL);
 ```
 # 支持特性（部分特性基于simple-node-logger的已有功能）：
 #### 1.支持日志分级管理(level，如trace, error, warn, debug, info等等)。simple-node-logger原有特性。
