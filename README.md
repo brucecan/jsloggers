@@ -58,8 +58,8 @@ log.info(FCRED + "RED text " + FCNORMAL + FCYELLOW + "YELLOW text" + FCNORMAL);
 #### 9.支持同步和异步日志。同步日志直观而迅速，但过多的同步日志操作会阻塞和影响整个应用的性能。异步日志没有那么直观，但将日志操作放入task queue或micro task queue，使得整个应用的执行更加顺畅，性能和整体吞吐率都能得到提升。jsloggers继承了simple-node-logger的异步日志功能。由于日志是被process.nextTick放入microtask队列中，因此具备相对较高优先级。在此基础上要实现同步日志也不难，只需要扩充flag对象中的标志位，并同时在log对象中增加一些新的accessor properties，如log.sconsole, logsconsoleln, log.sfile, log.sfileln, log.swrite, log.swriteln等等，前缀s表示同步(sync)输出，在这些s开头的accessor property的函数代码中准备好flag对象的相应标志位，然后再略微修改一下log.log函数代码，在log.log中如果看到相应的同步日志标志位，则直接轮询appenders.forEach实施日志输出，而不用放到process.nextTick中轮询和输出。由于异步日志更实用，jsloggers中目前暂未实现这些同步日志功能。
 #### 10.可控结束。在整个app结束时，能够有序关闭各文件日志stream，从而将buffer的日志信息都flush到相应的文件中，以免丢失信息。这部分逻辑并未包含在jsworkers中，应用程序通过轮询一遍appender，获取每个log stream，并逐个调用stream.end即可。
 #### 11.i18n国际化支持。完善中，目前还不具备i18n日志能力。
-<br/>
-Notes:
+
+# Notes：
 You might see nothing (no console output) when debugging jsloggers in an IDE environment like Visual Studio Code. The following configuration (in launch.json) works like a charm in VSCode:
 
 ```
