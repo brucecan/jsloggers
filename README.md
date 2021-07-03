@@ -33,8 +33,12 @@ log.fileln.trace("8.this trace log is for file only (+newline)");
 log.write.info("9.this info log is for both console (no newline) and file (no newline)");
 log.write.debug("10.this debug log is for both console (no newline) and file (no newline)");
 log.writeln.warn("11.this warn log is for both console (+newline) and file (+newline)");
+log.console.resetLine().info("12.reset console and output log (without adding a new line)");
 
-// output color logs to console only
+// add an empty new line in file log only
+log.file.newLine();
+
+// reset console and output color-font logs
 log.console.resetLine().info(FCRED + "RED text " + FCNORMAL + FCYELLOW + "YELLOW text" + FCNORMAL);
 
 // for both console and file,
