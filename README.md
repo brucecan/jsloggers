@@ -14,6 +14,8 @@ A javascript logging library
 const { createLog, CONST: { FCRED, FCGREEN, FCYELLOW, FCBLUE, FCNORMAL, NEWLINE } } 
     = require(`${__dirname}/jsloggers.js`);
 
+// if you want to put the log files into directory ${__dirname}/log, please make sure 
+// ${__dirname}/log exists first. jsloggers is not responsible for creating any dirs.
 const log = createLog({
     writer: process.stdout.write.bind(process.stdout),
     timestampFormat: "YYYY-MM-DD HH:mm:ss",
