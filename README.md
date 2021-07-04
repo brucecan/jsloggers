@@ -8,11 +8,11 @@ A javascript logging library
 # Usage
 ```
 // if package is installed through "npm install jsloggers"
-// const { createLog, CONST: { FCRED, FCGREEN, FCYELLOW, FCBLUE, FCNORMAL, NEWLINE } } = require('jsloggers');
+const { createLog, CONST: { FCRED, FCGREEN, FCYELLOW, FCBLUE, FCNORMAL, NEWLINE } } = require('jsloggers');
 
 // or downloading the jsloggers.js file only
-const { createLog, CONST: { FCRED, FCGREEN, FCYELLOW, FCBLUE, FCNORMAL, NEWLINE } } 
-    = require(`${__dirname}/jsloggers.js`);
+//const { createLog, CONST: { FCRED, FCGREEN, FCYELLOW, FCBLUE, FCNORMAL, NEWLINE } } 
+//    = require(`${__dirname}/jsloggers.js`);
 
 // if you want to put the log files into directory ${__dirname}/log, please make sure 
 // ${__dirname}/log exists first. jsloggers is not responsible for creating any dirs.
