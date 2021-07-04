@@ -1,11 +1,11 @@
 # jsloggers
 A javascript logging library
 
-# Output
+## Output
 
 ![image](https://user-images.githubusercontent.com/76823086/123559147-37f05500-d768-11eb-9621-d48817567737.png)
 
-# Usage
+## Usage
 ```
 // if package is installed through "npm install jsloggers"
 const { createLog, CONST: { FCRED, FCGREEN, FCYELLOW, FCBLUE, FCNORMAL, NEWLINE } } = require('jsloggers');
@@ -48,7 +48,7 @@ log.console.resetLine().info(FCRED + "RED text " + FCNORMAL + FCYELLOW + "YELLOW
 // and those escape characters will be removed automatically before being writing to file
 log.info(FCRED + "RED text " + FCNORMAL + FCYELLOW + "YELLOW text" + FCNORMAL);
 ```
-# Features
+## Features
 #### 1.支持日志分级管理(level，如trace, error, warn, debug, info等等)。simple-node-logger原有特性。
 #### 2.一条log语句同时输出到console和file（console and file），而不需要写两条语句来达到目的，后者很容易漏掉日志输出语句。另外，jsloggers也支持单方向输出（console or file）。
 #### 3.能分别定义输出到console和file的信息格式（如时间戳格式等），以满足console和file对日志的不同格式要求（如console日志有屏幕宽度限制，文件日志不带颜色属性等）。simple-node-logger原有特性。
@@ -61,10 +61,13 @@ log.info(FCRED + "RED text " + FCNORMAL + FCYELLOW + "YELLOW text" + FCNORMAL);
 #### 10.可控结束。在整个app结束时，能够有序关闭各文件日志stream，从而将buffer的日志信息都flush到相应的文件中，以免丢失信息。这部分逻辑并未包含在jsworkers中，应用程序通过轮询一遍appender，获取每个log stream，并逐个调用stream.end即可。
 #### 11.i18n国际化支持。完善中，目前还不具备i18n日志能力。
 
-# Notes
+## Notes
 You might see nothing (no console output) when debugging jsloggers in an IDE environment like Visual Studio Code. The following configuration (in launch.json) works like a charm in VSCode:
 
 ```
 "console": "integratedTerminal"
 ```
 Other IDEs may have similar options.
+
+## Acknowledgements
+- [simple-node-logger](https://github.com/darrylwest/simple-node-logger)
