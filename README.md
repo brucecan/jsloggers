@@ -99,6 +99,14 @@ produce logs ending with a new-line character, for both console and file.
 log.write.info(something + "\n")=log.writeln.info(something) ......
 produce logs ending with a new-line character, for both console and file.
 ```
+```
+log.write.newLine() = log.writeln.newLine()
+produce an empty line, for both console and file
+```
+```
+log.info() without providing any parameters
+produce an empty line, with leading level information goes like this: [INFO]
+```
 Always one option fit for you. 总有一款适合你. 
 
 ## Features
