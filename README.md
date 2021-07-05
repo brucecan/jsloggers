@@ -78,5 +78,17 @@ log.info(field1.padEnd(30) + field2.padEnd(28) + field3.padEnd(36));
 log.info(field1.padStart(30) + field2.padStart(28) + field3.padStart(36));
 ```
 
+### Flexibility
+jsloggers provides a bunch of logging functions to cope with different situations. 
+log.info, log.warn, log.fatal ...... produce logs ending with a new-line character, for both console and file.
+log.console.info, log.console.warn, log.console.fatal ...... produce logs without ending new-line character, for console only.
+log.consoleln.info, log.consoleln.warn, log.consoleln.fatal ...... produce logs ending with a new-line character, for console only.
+log.file.info, log.file.warn, log.file.fatal ...... produce logs without ending new-line character, for file only.
+log.fileln.info, log.fileln.warn, log.fileln.fatal ...... produce logs ending with a new-line character, for file only.
+log.write.info, log.write.warn, log.write.fatal ...... produce logs without ending new-line character, for both console and file.
+log.writeln.info(=log.info), log.writeln.warn(=log.warn), log.writeln.fatal(=log.fatal) ...... produce logs ending with a new-line character, for both console and file.
+<br/>
+Always one option fit for you. 总有一款适合你. 
+
 ## Acknowledgements
 - [simple-node-logger](https://github.com/darrylwest/simple-node-logger)
