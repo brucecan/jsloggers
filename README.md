@@ -62,12 +62,21 @@ log.info(FCRED + "RED text " + FCNORMAL + FCYELLOW + "YELLOW text" + FCNORMAL);
 #### 11.i18n国际化支持。完善中，目前还不具备i18n日志能力。
 
 ## Notes
+### Configuration for stdout when debugging in IDE environment
 You might see nothing (no console output) when debugging jsloggers in an IDE environment like Visual Studio Code. The following configuration (in launch.json) works like a charm in VSCode:
 
 ```
 "console": "integratedTerminal"
 ```
 Other IDEs may have similar options.
+
+### Align output fields using String.prototype.padEnd() and String.prototype.padStart()
+Arranging left or right aligned fields is a good way to produce visually-friendly outputs. String.prototype.padEnd() and String.prototype.padStart() satisfy this type of needs.
+
+```
+log.info(field1.padEnd(30) + field2.padEnd(28) + field3.padEnd(36));
+log.info(field1.padStart(30) + field2.padStart(28) + field3.padStart(36));
+```
 
 ## Acknowledgements
 - [simple-node-logger](https://github.com/darrylwest/simple-node-logger)
