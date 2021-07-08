@@ -82,8 +82,12 @@ log.info(field1.padStart(30) + field2.padStart(28) + field3.padStart(36));
 ```
 
 ### Flexibility
-jsloggers provides a bunch of logging functions to cope with different situations. 
+jsloggers provides a bunch of logging and configuration functions to cope with different situations. 
 
+```
+log.sync = true, log.sync = false
+enabling sync logging or enabling async logging 
+```
 ```
 log.info, log.warn, log.fatal ...... 
 produce logs ending with a new-line character, for both console and file.
