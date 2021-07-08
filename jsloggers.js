@@ -10,17 +10,23 @@ const logger = require("simple-node-logger"),
   };
 
 // console character color
+const FCBLACK = "\x1b[30m";
 const FCRED = "\x1b[31m";
 const FCGREEN = "\x1b[32m";
 const FCYELLOW = "\x1b[33m";
 const FCBLUE = "\x1b[34m";
+const FCMAGENTA = "\x1b[35m";
+const FCCYAN = "\x1b[36m";
+const FCWHITE = "\x1b[37m"
 const FCNORMAL = "\x1b[0m";
 
 const NEWLINE = "\r\n";
 
 let logs = {};
 
-function createLog(consoleOpts = consoleOpts, fileOpts = fileOpts, level = "all", name = "global") {
+function createLog(consoleOpts = consoleOpts, fileOpts = fileOpts
+                    , level = "all", name = "global"
+                    , syncOutput = false) {
   if(logs[name]) return logs[name];
   // create a log manager
   const manager = new logger();
@@ -72,10 +78,14 @@ function createLog(consoleOpts = consoleOpts, fileOpts = fileOpts, level = "all"
 
   // bracket notation syntax to use a variable is a feature of ES6
   const mapObj = {
+    [FCBLACK]: "",
     [FCRED]: "",
     [FCGREEN]: "",
     [FCYELLOW]: "",
     [FCBLUE]: "",
+    [FCMAGENTA]: "",
+    [FCCYAN]: "",
+    [FCWHITE]: "",
     [FCNORMAL]: "",
   };
 
@@ -147,13 +157,37 @@ function createLog(consoleOpts = consoleOpts, fileOpts = fileOpts, level = "all"
 
   let log = manager.createLogger();
   log.setLevel(level); 
+  Object.defineProperties(log, {
+    _sync: {
+      value: false,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    },
+    sync: {
+      get: function () {
+        return this._sync;
+      },
+      set: function (value) {
+        this._sync = value;
+      },
+      enumerable: true,
+      configurable: true
+    }
+  });
+  log.getSync = function() {
+    return this._sync;
+  };
+  log.setSync = function (value) {
+    this._sync = value;
+  };
 
   log.orig = {};
   logger.Logger.STANDARD_LEVELS.forEach(item => { log.orig[item] = log[item]; });
   logger.Logger.STANDARD_LEVELS.forEach(item => {
     log[item] = function(){
       let paras = [].slice.call(arguments);
-      paras.unshift({console: true, file: true, consoleln: true, fileln: true});
+      paras.unshift({console: true, file: true, consoleln: true, fileln: true, sync: log.sync});
       log.orig[item].apply(log, paras);
     }
   });
@@ -167,7 +201,7 @@ function createLog(consoleOpts = consoleOpts, fileOpts = fileOpts, level = "all"
       flag = entry.msg[0];
     }
 
-    process.nextTick(function () {
+    let writeAppenders = function () {
       // write the message to the appenders...
       appenders.forEach(function (appender) {
         if(!flag)
@@ -183,31 +217,39 @@ function createLog(consoleOpts = consoleOpts, fileOpts = fileOpts, level = "all"
         typeof errorEventName === String) {
         process.emit(errorEventName, entry);
       }*/
-    });
+    };
+
+    if(flag && flag.sync) writeAppenders();
+    else process.nextTick(writeAppenders);
 
     return entry;
   }
-
+  
   Object.defineProperties(log, {
     console: {
       get: function () {
         let logWrapper = {
           resetLine: function(){
-            process.nextTick(function () {
+            if(!log.sync) {
+              process.nextTick(function () {
+                readline.clearLine(process.stdout);
+                readline.cursorTo(process.stdout, 0);
+              });
+            } else {
               readline.clearLine(process.stdout);
               readline.cursorTo(process.stdout, 0);
-            });
+            }
             return logWrapper;
           },
           newLine: function(){
             let paras = [].slice.call(arguments);
-            paras.unshift({console: true, file: false, consoleln: true, fileln: false, empty: true});
+            paras.unshift({console: true, file: false, consoleln: true, fileln: false, empty: true, sync: log.sync});
             log.orig.info.apply(log, paras);
           }
         };
         logger.Logger.STANDARD_LEVELS.forEach(item => logWrapper[item] = function(){
           let paras = [].slice.call(arguments);
-          paras.unshift({console: true, file: false, consoleln: false, fileln: false});
+          paras.unshift({console: true, file: false, consoleln: false, fileln: false, sync: log.sync});
           log.orig[item].apply(log, paras);
         });
         return logWrapper;
@@ -219,21 +261,26 @@ function createLog(consoleOpts = consoleOpts, fileOpts = fileOpts, level = "all"
       get: function () {
         let logWrapper = {
           resetLine: function(){
-            process.nextTick(function () {
+            if(!log.sync) {
+              process.nextTick(function () {
+                readline.clearLine(process.stdout);
+                readline.cursorTo(process.stdout, 0);
+              });
+            } else {
               readline.clearLine(process.stdout);
               readline.cursorTo(process.stdout, 0);
-            });
+            }
             return logWrapper;
           },
           newLine: function(){
             let paras = [].slice.call(arguments);
-            paras.unshift({console: true, file: false, consoleln: true, fileln: false, empty: true});
+            paras.unshift({console: true, file: false, consoleln: true, fileln: false, empty: true, sync: log.sync});
             log.orig.info.apply(log, paras);
           }
         };
         logger.Logger.STANDARD_LEVELS.forEach(item => logWrapper[item] = function(){
           let paras = [].slice.call(arguments);
-          paras.unshift({console: true, file: false, consoleln: true, fileln: false});
+          paras.unshift({console: true, file: false, consoleln: true, fileln: false, sync: log.sync});
           log.orig[item].apply(log, paras);
         });
         return logWrapper;
@@ -246,13 +293,13 @@ function createLog(consoleOpts = consoleOpts, fileOpts = fileOpts, level = "all"
         let logWrapper = {
           newLine: function(){
             let paras = [].slice.call(arguments);
-            paras.unshift({console: false, file: true, consoleln: false, fileln: true, empty: true});
+            paras.unshift({console: false, file: true, consoleln: false, fileln: true, empty: true, sync: log.sync});
             log.orig.info.apply(log, paras);
           }
         };
         logger.Logger.STANDARD_LEVELS.forEach(item => logWrapper[item] = function(){
           let paras = [].slice.call(arguments);
-          paras.unshift({console: false, file: true, consoleln: false, fileln: false});
+          paras.unshift({console: false, file: true, consoleln: false, fileln: false, sync: log.sync});
           log.orig[item].apply(log, paras);
         });
         return logWrapper;
@@ -265,13 +312,13 @@ function createLog(consoleOpts = consoleOpts, fileOpts = fileOpts, level = "all"
         let logWrapper = {
           newLine: function(){
             let paras = [].slice.call(arguments);
-            paras.unshift({console: false, file: true, consoleln: false, fileln: true, empty: true});
+            paras.unshift({console: false, file: true, consoleln: false, fileln: true, empty: true, sync: log.sync});
             log.orig.info.apply(log, paras);
           }
         };
         logger.Logger.STANDARD_LEVELS.forEach(item => logWrapper[item] = function(){
           let paras = [].slice.call(arguments);
-          paras.unshift({console: false, file: true, consoleln: false, fileln: true});
+          paras.unshift({console: false, file: true, consoleln: false, fileln: true, sync: log.sync});
           log.orig[item].apply(log, paras);
         });
         return logWrapper;
@@ -284,13 +331,13 @@ function createLog(consoleOpts = consoleOpts, fileOpts = fileOpts, level = "all"
         let logWrapper = {
           newLine: function(){
             let paras = [].slice.call(arguments);
-            paras.unshift({console: true, file: true, consoleln: true, fileln: true, empty: true});
+            paras.unshift({console: true, file: true, consoleln: true, fileln: true, empty: true, sync: log.sync});
             log.orig.info.apply(log, paras);
           }
         };
         logger.Logger.STANDARD_LEVELS.forEach(item => logWrapper[item] = function(){
           let paras = [].slice.call(arguments);
-          paras.unshift({console: true, file: true, consoleln: false, fileln: false});
+          paras.unshift({console: true, file: true, consoleln: false, fileln: false, sync: log.sync});
           log.orig[item].apply(log, paras);
         });
         return logWrapper;
@@ -303,13 +350,13 @@ function createLog(consoleOpts = consoleOpts, fileOpts = fileOpts, level = "all"
         let logWrapper = {
           newLine: function(){
             let paras = [].slice.call(arguments);
-            paras.unshift({console: true, file: true, consoleln: true, fileln: true, empty: true});
+            paras.unshift({console: true, file: true, consoleln: true, fileln: true, empty: true, sync: log.sync});
             log.orig.info.apply(log, paras);
           }
         };
         logger.Logger.STANDARD_LEVELS.forEach(item => logWrapper[item] = function(){
           let paras = [].slice.call(arguments);
-          paras.unshift({console: true, file: true, consoleln: true, fileln: true});
+          paras.unshift({console: true, file: true, consoleln: true, fileln: true, sync: log.sync});
           log.orig[item].apply(log, paras);
         });
         return logWrapper;
@@ -329,10 +376,14 @@ function createLog(consoleOpts = consoleOpts, fileOpts = fileOpts, level = "all"
 module.exports = {
   createLog: createLog,
   CONST: {
+    FCBLACK: FCBLACK,
     FCRED: FCRED,
     FCGREEN: FCGREEN,
     FCYELLOW: FCYELLOW,
     FCBLUE: FCBLUE,
+    FCMAGENTA: FCMAGENTA,
+    FCCYAN: FCCYAN,
+    FCWHITE: FCWHITE,
     FCNORMAL: FCNORMAL,
     NEWLINE: NEWLINE
   } 
