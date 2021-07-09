@@ -63,6 +63,12 @@ log.console.resetLine().info(FCRED + "RED text " + FCNORMAL + FCYELLOW + "YELLOW
 // in this case, the FONT COLOR escape characters only poses an effect on console, 
 // and those escape characters will be removed automatically before being writing to file
 log.info(FCRED + "RED text " + FCNORMAL + FCYELLOW + "YELLOW text" + FCNORMAL);
+
+// close all file streams before app ends
+(async () => {
+  await log.closeFile();
+  console.log("App ends.");
+})();
 ```
 ## Notes
 ### Configuration for stdout when debugging in IDE environment
@@ -127,6 +133,10 @@ produce an empty line, for both console and file
 log.info() without providing any parameters
 produce an empty line, with leading level information goes like this: [INFO]
 ```
+```
+log.closeFile
+close all file streams before app ends
+```
 Always one option fit for you. 总有一款适合你. 
 
 ## Features
@@ -139,7 +149,7 @@ Always one option fit for you. 总有一款适合你.
 #### 7.console日志支持resetLine功能，即在控制台的同一行上不断刷新信息，而不增加新行。
 #### 8.支持创建、管理和获取多个不同的日志，比如说针对app全局设定一个global日志，针对网络管理设定一个network_log日志，针对文件管理设定一个file_log，针对业务逻辑设定一个business_log，这些log都可以输出到console，另外还可以分别输出到不同文件中，日志格式也可以单独定义。在node.js main app module中执行的时候可以使用global logger，而进入各分项module的时候可以使用各自的分项logger，当然各模块也可以交叉获取和使用所有这些logger。在整个app的生命周期中，这些logger都需要遵循一次创建(Create)，无限次使用(Get)的原则，而不会被重复创建。
 #### 9.支持同步和异步日志。同步日志直观而迅速，但过多的同步日志操作会阻塞和影响整个应用的性能。异步日志没有那么直观，但将日志操作放入task queue或micro task queue，使得整个应用的执行更加顺畅，性能和整体吞吐率都能得到提升。jsloggers继承了simple-node-logger的异步日志功能，同时通过log.sync标志实现同步日志功能，并支持在同步与异步日志间自由切换。
-#### 10.可控结束。在整个app结束时，能够有序关闭各文件日志stream，从而将buffer的日志信息都flush到相应的文件中，以免丢失信息。这部分逻辑并未包含在jsworkers中，应用程序通过轮询一遍appender，获取每个log stream，并逐个调用stream.end即可。
+#### 10.可控结束。在整个app结束时，能够有序关闭各文件日志stream，从而将buffer的日志信息都flush到相应的文件中，以免丢失信息。
 #### 11.i18n国际化支持。完善中，目前还不具备i18n日志能力。
 
 ## Acknowledgements
