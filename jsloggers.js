@@ -368,6 +368,21 @@ function createLog(consoleOpts = consoleOpts, fileOpts = fileOpts
 
 
   log.getLogger = () => logger;
+
+  log.closeFile = () => {
+    return new Promise((resolve, reject) => {
+      // use setImmediately to ensure all pending writes have been done before
+      // calling stream.end. 
+      setImmediate(() => {
+        log.getAppenders().forEach(appender => {
+          if(appender instanceof log.getLogger().appenders.FileAppender) 
+            appender.closeWriter();
+        });
+        resolve();
+      });
+    });
+  };
+
   logs[name] = log;
 
   return log;
