@@ -64,7 +64,7 @@ log.console.resetLine().info(FCRED + "RED text " + FCNORMAL + FCYELLOW + "YELLOW
 // and those escape characters will be removed automatically before being writing to file
 log.info(FCRED + "RED text " + FCNORMAL + FCYELLOW + "YELLOW text" + FCNORMAL);
 
-// close all file streams before app ends
+// close all log-file streams before app ends
 (async () => {
   await log.closeFile();
   console.log("App ends.");
@@ -135,7 +135,7 @@ produce an empty line, with leading level information goes like this: [INFO]
 ```
 ```
 log.closeFile
-close all file streams before app ends
+close all log-file streams before app ends
 ```
 Always one option fit for you. 总有一款适合你. 
 
