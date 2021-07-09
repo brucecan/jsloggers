@@ -54,6 +54,7 @@ function createLog(consoleOpts = consoleOpts, fileOpts = fileOpts
   
     return fields.join( this.separator );
   };
+
   consoleAppender.formatEntry = function (entry, thisArg) {
     const apdr = thisArg || this;
 
