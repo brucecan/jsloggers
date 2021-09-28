@@ -1,4 +1,6 @@
 const readline = require('readline');
+const { EOL } = require('os');
+
 const logger = require("simple-node-logger"),
   consoleOpts = {
     writer: process.stdout.write.bind(process.stdout),
@@ -20,7 +22,7 @@ const FCCYAN = "\x1b[36m";
 const FCWHITE = "\x1b[37m"
 const FCNORMAL = "\x1b[0m";
 
-const NEWLINE = "\r\n";
+const NEWLINE = EOL;
 
 let logs = {};
 
