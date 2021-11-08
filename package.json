@@ -1,6 +1,6 @@
 {
   "name": "jsloggers",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "A javascript logging library",
   "main": "jsloggers.js",
   "scripts": {
