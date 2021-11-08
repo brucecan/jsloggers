@@ -162,7 +162,7 @@ function createLog(consoleOpts = consoleOpts, fileOpts = fileOpts
   log.setLevel(level); 
   Object.defineProperties(log, {
     _sync: {
-      value: false,
+      value: syncOutput,
       enumerable: true,
       configurable: true,
       writable: true
@@ -391,8 +391,13 @@ function createLog(consoleOpts = consoleOpts, fileOpts = fileOpts
   return log;
 }
 
+function getLog(name = "global") {
+  return logs[name];
+}
+
 module.exports = {
   createLog: createLog,
+  getLog: getLog,
   CONST: {
     FCBLACK: FCBLACK,
     FCRED: FCRED,
